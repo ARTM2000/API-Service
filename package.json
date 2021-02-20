@@ -1,0 +1,29 @@
+{
+  "name": "api-service",
+  "version": "1.0.0",
+  "description": "full usable and custom API-Service",
+  "main": "apiService.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ARTM2000/API-Service.git"
+  },
+  "keywords": [
+    "api",
+    "api-service",
+    "axios",
+    "front-end",
+    "js"
+  ],
+  "author": "Alireza Tanoomandian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ARTM2000/API-Service/issues"
+  },
+  "homepage": "https://github.com/ARTM2000/API-Service#readme",
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
