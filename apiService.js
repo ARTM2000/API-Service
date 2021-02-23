@@ -1,11 +1,11 @@
 import Axios from "axios";
-import CustomToast from "./toastGenerator";
+import CustomToast from "./toastGenerator"; /* react custom toast creator. Should receive `message` and `messageType` with this order */
 
 export const CONFIG = {
 	baseUrl: {
 		real: "<YOUR API BASE URL>",
 		mock: "<YOUR MOCK API BASE URL>",
-		alwaysUseMockURL: false,
+		alwaysUseMockURL: false /* If you want to always use mock url in your requests, turn this field to `true`, otherwise keep it `false` */,
 	},
 	clientSecret: {
 		headerName: "<HEADER NAME>",
@@ -93,7 +93,7 @@ export const APIService = (
 		headers: {},
 		body: {},
 		params: {},
-		options: {},
+		options: {} /* axios other options will go here */,
 	},
 	requestOptions = {
 		toast: {
