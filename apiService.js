@@ -5,6 +5,7 @@ export const CONFIG = {
 	baseUrl: {
 		real: "<YOUR API BASE URL>",
 		mock: "<YOUR MOCK API BASE URL>",
+		alwaysUseMockURL: false,
 	},
 	clientSecret: {
 		headerName: "<HEADER NAME>",
@@ -178,9 +179,10 @@ export const APIService = (
 	}
 
 	api = Axios.create({
-		baseURL: requestOptions.useMockBaseURL
-			? CONFIG.baseUrl.mock
-			: CONFIG.baseUrl.real,
+		baseURL:
+			CONFIG.baseUrl.alwaysUseMockURL || requestOptions.useMockBaseURL
+				? CONFIG.baseUrl.mock
+				: CONFIG.baseUrl.real,
 		headers: headers,
 		params: params,
 		data: method !== "GET" ? body : {},
@@ -370,9 +372,10 @@ export const AsyncAPIService = async (
 	}
 
 	api = Axios.create({
-		baseURL: requestOptions.useMockBaseURL
-			? CONFIG.baseUrl.mock
-			: CONFIG.baseUrl.real,
+		baseURL:
+			CONFIG.baseUrl.alwaysUseMockURL || requestOptions.useMockBaseURL
+				? CONFIG.baseUrl.mock
+				: CONFIG.baseUrl.real,
 		headers: headers,
 		params: params,
 		data: method !== "GET" ? body : {},
