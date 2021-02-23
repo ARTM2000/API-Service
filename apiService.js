@@ -15,20 +15,28 @@ export const CONFIG = {
 		value: "<CLIENT ID VALUE>",
 	},
 	accessToken: {
-		localStorageName: "<NAME OF LOCAL STORAGE ITEM WHICH YOU STORE USER ACCESS TOKEN>",
-		headerName: "<ACCESS TOEKN HEADER NAME>",
-		prefix: "Bearer ", /* Set your access token prefix here, in case you need it */
+		localStorageName:
+			"<NAME OF LOCAL STORAGE ITEM WHICH YOU STORE USER ACCESS TOKEN>",
+		headerName: "<ACCESS TOKEN HEADER NAME>",
+		prefix:
+			"Bearer " /* Set your access token prefix here, in case you need it */,
 	},
 	refreshToken: {
-		active: true, /* If your API service support refresh token, make it true. Otherwise make it false */
-		url: "", /* Set API route which your API used for refresh token functionality */
-		method: "POST", /* Most of the time this function happen with 'POST' HTTP method. If it's not your case, change it to your need */
+		active: true /* If your API service support refresh token, make it true. Otherwise make it false */,
+		url:
+			"" /* Set API route which your API used for refresh token functionality */,
+		method:
+			"POST" /* Most of the time this function happen with 'POST' HTTP method. If it's not your case, change it to your need */,
 		token: {
-			localStorageName: "<NAME OF LOCAL STORAGE ITEM WHICH YOU STORE USER REFRESH TOKEN>",
+			localStorageName:
+				"<NAME OF LOCAL STORAGE ITEM WHICH YOU STORE USER REFRESH TOKEN>",
 			headerName: "<HEADER NAME>",
-			prefix: "", /* Set your access token prefix here, in case you need it */
+			prefix: "" /* Set your access token prefix here, in case you need it */,
 		},
-		onStatus: [401, 403], /* Set the HTTP status codes which refresh token function should fires. If it become empty array, refresh token not work */
+		onStatus: [
+			401,
+			403,
+		] /* Set the HTTP status codes which refresh token function should fires. If it become empty array, refresh token not work */,
 	},
 };
 
@@ -37,10 +45,9 @@ export const CONFIG = {
  */
 const refreshTokenHandler = () => {
 	const myHeader = {
-		[CONFIG.refreshToken.token.headerName]: 
-            CONFIG.refreshToken.token.prefix + localStorage.getItem(
-			CONFIG.refreshToken.token.localStorageName
-		),
+		[CONFIG.refreshToken.token.headerName]:
+			CONFIG.refreshToken.token.prefix +
+			localStorage.getItem(CONFIG.refreshToken.token.localStorageName),
 	};
 
 	APIService(
@@ -210,7 +217,6 @@ export const APIService = (
 	response
 		.then((res) => {
 			/* do the magic */
-			callback.onSuccess(res, extraData);
 			if (requestOptions.toast && requestOptions.toast.success !== "") {
 				CustomToast(requestOptions.toast.success, "success");
 			}
@@ -220,6 +226,7 @@ export const APIService = (
 			if (requestOptions.deleteAccessTokenAfterRequest_success) {
 				localStorage.removeItem(CONFIG.accessToken.localStorageName);
 			}
+			return callback.onSuccess(res, extraData);
 		})
 		.catch((err) => {
 			const errorResponse = err.response;
@@ -241,7 +248,6 @@ export const APIService = (
 			}
 
 			/* take a rest and then fix error :)) */
-			callback.onFail(err, { ...extraData, ...reportData });
 			if (requestOptions.toast && requestOptions.toast.fail !== "") {
 				CustomToast(requestOptions.toast.fail, "error");
 			}
@@ -254,6 +260,7 @@ export const APIService = (
 			if (!requestOptions.disableLogOnError) {
 				console.error(err);
 			}
+			return callback.onFail(err, { ...extraData, ...reportData });
 		});
 };
 
@@ -401,7 +408,6 @@ export const AsyncAPIService = async (
 		}
 
 		/* do the magic */
-		callback.onSuccess(response, extraData);
 		if (requestOptions.toast && requestOptions.toast.success !== "") {
 			CustomToast(requestOptions.toast.success, "success");
 		}
@@ -411,8 +417,9 @@ export const AsyncAPIService = async (
 		if (requestOptions.deleteAccessTokenAfterRequest_success) {
 			localStorage.removeItem(CONFIG.accessToken.localStorageName);
 		}
+		return callback.onSuccess(response, extraData);
 	} catch (err) {
-        /* take a rest and then fix error :)) */
+		/* take a rest and then fix error :)) */
 		const errorResponse = err.response;
 		let reportData = {
 			_refresh_token_process: false,
@@ -431,7 +438,6 @@ export const AsyncAPIService = async (
 			}
 		}
 
-		callback.onFail(err, { ...extraData, ...reportData });
 		if (requestOptions.toast && requestOptions.toast.fail !== "") {
 			CustomToast(requestOptions.toast.fail, "error");
 		}
@@ -444,5 +450,6 @@ export const AsyncAPIService = async (
 		if (!requestOptions.disableLogOnError) {
 			console.error(err);
 		}
+		return callback.onFail(err, { ...extraData, ...reportData });
 	}
 };
