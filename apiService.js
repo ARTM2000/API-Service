@@ -185,7 +185,6 @@ export const APIService = (
 				: CONFIG.baseUrl.real,
 		headers: headers,
 		params: params,
-		data: method !== "GET" ? body : {},
 		...options,
 	});
 
@@ -197,19 +196,19 @@ export const APIService = (
 			break;
 
 		case "POST":
-			response = api.post(url);
+			response = api.post(url, body);
 			break;
 
 		case "PUT":
-			response = api.put(url);
+			response = api.put(url, body);
 			break;
 
 		case "DELETE":
-			response = api.delete(url);
+			response = api.delete(url, body);
 			break;
 
 		case "PATCH":
-			response = api.patch(url);
+			response = api.patch(url, body);
 			break;
 
 		default:
@@ -378,7 +377,6 @@ export const AsyncAPIService = async (
 				: CONFIG.baseUrl.real,
 		headers: headers,
 		params: params,
-		data: method !== "GET" ? body : {},
 		...options,
 	});
 
@@ -391,19 +389,19 @@ export const AsyncAPIService = async (
 				break;
 
 			case "POST":
-				response = await api.post(url);
+				response = await api.post(url, body);
 				break;
 
 			case "PUT":
-				response = await api.put(url);
+				response = await api.put(url, body);
 				break;
 
 			case "DELETE":
-				response = await api.delete(url);
+				response = await api.delete(url, body);
 				break;
 
 			case "PATCH":
-				response = await api.patch(url);
+				response = await api.patch(url, body);
 				break;
 
 			default:
